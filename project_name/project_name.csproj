@@ -34,30 +34,10 @@
     
     <!-- Include the Content directory (except for .fx files, since we use .fxb at runtime) -->
     <ItemGroup>
-        <Content Include="Content/**/*.*" Exclude="**/*.fx; Content/Content-Goes-Here.txt">
+        <Content Include="Content/**/*.*" Exclude= "Content/Content-Goes-Here.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
-    
-    <!-- Include the CompiledContent bin (MGCB output). Copy it to the Content folder in the build. -->
-    <ItemGroup>
-        <Content Include="CompiledContent/bin/DesktopGL/**/*.xnb">
-            <Link>Content/%(RecursiveDir)%(Filename)%(Extension)</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <!-- cleanup so VS looks clean -->
-        <None Remove="CompiledContent\obj\**"/>
-        <None Remove="CompiledContent\bin\**"/>
-        <None Remove="CompiledContent\.*"/>
-    </ItemGroup>
-    
-    <!-- MonoGames content pipeline needs this defined -->
-    <ItemGroup>
-        <MonoGameContentReference Include="CompiledContent\Content.mgcb"/>
-    </ItemGroup>
-    
-    <Import Project="../MonoGameContent.targets"/>
-    
     
     <PropertyGroup>
         <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>

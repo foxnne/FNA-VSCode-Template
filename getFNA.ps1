@@ -181,5 +181,5 @@ dotnet restore "Nez/Nez.sln"
 "Building..."
 msbuild "Nez/Nez.sln"
 msbuild -t:restore $newProjectName
-msbuild -t:buildcontent $newProjectName
+#msbuild -t:buildcontent $newProjectName
 msbuild "${newProjectName}.sln"
