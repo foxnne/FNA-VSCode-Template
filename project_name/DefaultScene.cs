@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
-using Nez.ImGuiTools;
 
 namespace project_name
 {
-    public class DefaultScene : Scene
+	public class DefaultScene : Scene
     {
         public override void Initialize()
         {
@@ -18,10 +17,10 @@ namespace project_name
                 .AddComponent<DemoComponent>()
                 .AddComponent(new PrototypeSprite(20, 20));
 
-            var Logo = Content.Load<Texture2D>("nez-logo-black");
+            var logo = Content.Load<Texture2D>("nez-logo-black");
             CreateEntity("logo")
                 .SetPosition(Screen.Center)
-                .AddComponent(new Nez.Sprites.Sprite(Logo));
+                .AddComponent(new Nez.Sprites.Sprite(logo));
         }
     }
 }
