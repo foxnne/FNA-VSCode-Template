@@ -77,7 +77,7 @@
                 "command": "start",
                 "args": [
                     "/wait",
-                    "${workspaceFolder}/project_name/bin/Debug/project_name.exe",
+                    "\"project_name.exe\"", //names the console window 
                     "${workspaceFolder}/project_name/bin/Debug/project_name.exe"
                 ]
             },
@@ -96,8 +96,8 @@
                 "command": "start",
                 "args": [
                     "/wait",
-                    "${workspaceFolder}/project_name/bin/Release/project_name.exe",
-                    "${workspaceFolder}/project_name/bin/Release/project_name.exe"
+                    "\"project_name.exe\"", //names the console window 
+                    "${workspaceFolder}/project_name/bin/Release/project_name.exe" 
                 ]
             },
             "dependsOn": "Build (Release)",
@@ -156,7 +156,7 @@
             },
             "problemMatcher": "$msCompile"
         },
-		
+
         {
             "label": "Generate Content Paths",
             "type": "shell",
