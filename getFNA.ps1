@@ -10,7 +10,6 @@ function checkDotnet()
     try { dotnet | Out-Null }
     catch [System.Management.Automation.CommandNotFoundException]
     {
-        Write-Output "ERROR: Dotnet is not installed. Please install dotnet to download the t4 tool."
         return 0;
     }
     return 1;
@@ -18,7 +17,7 @@ function checkDotnet()
 
 function installT4 () 
 {
-    if (checkDotnet) { Invoke-Expression 'dotnet tool install -g dotnet-t4' }
+    if (checkDotnet) { Write-Output "Installing T4 Templates..."; Invoke-Expression 'dotnet tool install -g dotnet-t4' }
 }
 
 function checkGit () 
@@ -98,8 +97,6 @@ function getLibs ()
     
 }
 
-checkMsbuild
-
 if (Test-Path "${PSScriptRoot}\FNA")
 {
     $shouldUpdate = Read-Host -Prompt "Update FNA (y/n)?"
@@ -171,12 +168,16 @@ git submodule update
 #set upstream for us to update from prime31's Nez
 git remote add upstream https://github.com/prime31/Nez.git
 
-"Restoring..."
-Set-Location $PSScriptRoot
-dotnet restore "Nez/Nez.sln"
+Set-Location ../
 
-"Building..."
-msbuild "Nez/Nez.sln"
-msbuild -t:restore $newProjectName
-#msbuild -t:buildcontent $newProjectName
-msbuild "${newProjectName}.sln"
+"Restoring and Building..."
+if (checkDotnet) 
+{ 
+    dotnet build "${newProjectName}.sln"
+}
+else 
+{
+    checkMsbuild
+    msbuild -t:restore $newProjectName
+    msbuild "${newProjectName}.sln"
+}
