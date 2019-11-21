@@ -3,34 +3,6 @@
     "tasks": [
 
         {
-            "label": "Restore Project",
-            "type": "shell",
-            "command": "msbuild /t:restore",
-            "group": "build",
-            "problemMatcher": "$msCompile"
-        },
-	
-        {
-            // this does a bunch of stuff:
-            // - update submodules to lastest (fetch latest Nez version)
-            // - clean, restore and rebuild Nez.sln (nuget restore to get latest packages)
-            // - clean, restore and rebuild Nez.FNA.sln (nuget restore Nez.FNA)
-            "label": "Update, Restore and Rebuild Nez",
-            "type": "shell",
-            "command": "git submodule foreach --recursive git pull && msbuild Nez/Nez.sln /t:clean /t:restore && msbuild Nez/Nez.FNA.sln /t:clean /t:restore",
-            "group": "build",
-            "problemMatcher": "$msCompile",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": true
-            },
-        },
-
-        {
             "label": "Clean Builds",
             "type": "shell",
             "command": "msbuild project_name /t:clean /p:configuration=Debug && msbuild project_name /t:clean /p:configuration=Release",
@@ -94,7 +66,6 @@
             "windows":{
                 "command": "start",
                 "args": [
-                    "/wait",
                     "\"project_name.exe\"", //names the console window 
                     "${workspaceFolder}/project_name/bin/Debug/project_name.exe"
                 ]
@@ -121,7 +92,6 @@
             "windows":{
                 "command": "start",
                 "args": [
-                    "/wait",
                     "\"project_name.exe\"", //names the console window 
                     "${workspaceFolder}/project_name/bin/Release/project_name.exe" 
                 ]
@@ -148,8 +118,7 @@
             "windows":{
                 "command": "start",
                 "args": [
-                    "/wait",
-                    "${workspaceFolder}/project_name/bin/Release/project_name.exe",
+                    "\"project_name.exe\"", //names the console window 
                     "${workspaceFolder}/project_name/bin/Release/project_name.exe"
                 ]
             },
@@ -174,8 +143,7 @@
             "windows":{
                 "command": "start",
                 "args": [
-                    "/wait",
-                    "${workspaceFolder}/project_name/bin/Debug/project_name.exe",
+                    "\"project_name.exe\"", //names the console window 
                     "${workspaceFolder}/project_name/bin/Debug/project_name.exe"
                 ]
             },
@@ -222,6 +190,20 @@
             },
             "group": "build",
             "problemMatcher": "$msCompile",
+        },
+
+        {
+            "label": "Build Atlas",
+            "type": "shell",
+            "group": "build",
+            "windows":{
+                "command": "powershell",
+                "args": [
+                    "-File",
+                    "${workspaceFolder}/.vscode/buildAtlas.ps1"
+                ],
+            },
+            "problemMatcher": "$msCompile"
         },
     ]
 }
